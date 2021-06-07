@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sobev.OpLock.dao.StorageDao">
+
+    <select id="findAll" resultType="com.sobev.OpLock.entity.Storage">
+        select *
+        from storage
+    </select>
+
+    <update id="updateStock">
+        update storage set stock=stock - #{stock},data_version = data_version + 1
+        <where>
+            id = #{id} and data_version=#{data_version}
+        </where>
+    </update>
+
+    <select id="getDataVersionById" resultType="Integer">
+        select data_version from storage
+        <where>
+            id=#{id}
+        </where>
+    </select>
+</mapper>
